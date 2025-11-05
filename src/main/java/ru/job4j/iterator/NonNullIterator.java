@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class NonNullIterator implements Iterator<Integer> {
 
     private final Integer[] data;
-    private int index = 0; // текущая позиция в массиве
+    private int index = 0;
 
     public NonNullIterator(Integer[] data) {
         this.data = data;
@@ -14,7 +14,6 @@ public class NonNullIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        // сдвигаем указатель на первый не-null элемент
         while (index < data.length && data[index] == null) {
             index++;
         }
@@ -23,9 +22,9 @@ public class NonNullIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if (!hasNext()) { // если больше нет элементов
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return data[index++]; // вернуть элемент и передвинуть указатель
+        return data[index++];
     }
 }
