@@ -16,16 +16,23 @@ public class CyclicIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return !data.isEmpty();
+        if (data.isEmpty()) {
+            return false;
+        }
+        if (index >= data.size()) {
+            index = 0;
+        }
+        return true;
     }
 
     @Override
     public T next() {
-        if (data.isEmpty()) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         T element = data.get(index);
-        index = (index + 1) % data.size();
+        index++;
         return element;
     }
 }
+
