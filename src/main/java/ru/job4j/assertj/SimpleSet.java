@@ -1,6 +1,8 @@
 package ru.job4j.assertj;
+
 import java.util.Arrays;
 import java.util.Objects;
+
 public class SimpleSet {
     private String[] container = new String[2];
     private int size;
@@ -17,18 +19,16 @@ public class SimpleSet {
     }
 
     private boolean contains(String value) {
-        boolean result = false;
-        for (String element : container) {
-            if (Objects.equals(value, element)) {
-                result = true;
-                break;
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(container[i], value)) {
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     private void grow() {
-        int length = container.length * 2;
-        container = new String[length];
+        int newLength = container.length * 2;
+        container = Arrays.copyOf(container, newLength);
     }
 }

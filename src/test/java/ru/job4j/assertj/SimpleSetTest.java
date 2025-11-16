@@ -1,5 +1,8 @@
 package ru.job4j.assertj;
+
 import org.junit.jupiter.api.Test;
+import ru.job4j.assertj.SimpleSet;
+
 import static org.assertj.core.api.Assertions.*;
 class SimpleSetTest {
     @Test
