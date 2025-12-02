@@ -1,6 +1,7 @@
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class User {
 
@@ -14,10 +15,16 @@ public class User {
         this.birthday = birthday;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
+
     public static void main(String[] args) {
 
         Calendar date = Calendar.getInstance();
-        date.set(1990, Calendar.JANUARY, 1);
+        date.set(1990, Calendar.JANUARY, 1, 10, 20, 30);
+        date.set(Calendar.MILLISECOND, 123); // полное совпадение до миллисекунд
 
         User user1 = new User("Ivan", 2, date);
         User user2 = new User("Ivan", 2, date);
