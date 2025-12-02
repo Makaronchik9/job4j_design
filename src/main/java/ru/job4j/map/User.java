@@ -13,4 +13,13 @@ public class User {
         this.children = children;
         this.birthday = birthday;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", children=" + children +
+                ", birthday=" + birthday.getTime() +
+                '}';
+    }
 }
