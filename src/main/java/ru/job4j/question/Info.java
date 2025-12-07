@@ -28,16 +28,29 @@ public class Info {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Info)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Info)) {
+            return false;
+        }
         Info info = (Info) o;
-        return added == info.added &&
-                changed == info.changed &&
-                deleted == info.deleted;
+        return added == info.added
+                && changed == info.changed
+                && deleted == info.deleted;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(added, changed, deleted);
+    }
+
+    @Override
+    public String toString() {
+        return "Info{"
+                + "added=" + added
+                + ", changed=" + changed
+                + ", deleted=" + deleted
+                + '}';
     }
 }
