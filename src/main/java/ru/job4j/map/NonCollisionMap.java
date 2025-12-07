@@ -18,12 +18,11 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if ((float) count / capacity >= LOAD_FACTOR) {
+        if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
 
-        int hash = hash(Objects.hashCode(key));
-        int index = indexFor(hash);
+        int index = indexForKey(key);
 
         if (table[index] != null) {
             return false;
@@ -37,16 +36,10 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public V get(K key) {
-        int hash = hash(Objects.hashCode(key));
-        int index = indexFor(hash);
-
+        int index = indexForKey(key);
         MapEntry<K, V> entry = table[index];
-        if (entry == null) {
-            return null;
-        }
 
-        if (Objects.hashCode(entry.key) == Objects.hashCode(key)
-                && Objects.equals(entry.key, key)) {
+        if (entry != null && keysEqual(entry.key, key)) {
             return entry.value;
         }
 
@@ -55,16 +48,10 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public boolean remove(K key) {
-        int hash = hash(Objects.hashCode(key));
-        int index = indexFor(hash);
-
+        int index = indexForKey(key);
         MapEntry<K, V> entry = table[index];
-        if (entry == null) {
-            return false;
-        }
 
-        if (Objects.hashCode(entry.key) == Objects.hashCode(key)
-                && Objects.equals(entry.key, key)) {
+        if (entry != null && keysEqual(entry.key, key)) {
             table[index] = null;
             count--;
             modCount++;
@@ -80,7 +67,6 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
             int expectedModCount = modCount;
             int cursor = 0;
-            int returned = 0;
 
             @Override
             public boolean hasNext() {
@@ -111,6 +97,15 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         return hash & (capacity - 1);
     }
 
+    private int indexForKey(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
+    private boolean keysEqual(K key1, K key2) {
+        return Objects.hashCode(key1) == Objects.hashCode(key2)
+                && Objects.equals(key1, key2);
+    }
+
     @SuppressWarnings("unchecked")
     private void expand() {
         capacity *= 2;
@@ -129,7 +124,7 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         K key;
         V value;
 
-        public MapEntry(K key, V value) {
+        MapEntry(K key, V value) {
             this.key = key;
             this.value = value;
         }
