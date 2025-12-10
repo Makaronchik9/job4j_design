@@ -3,10 +3,10 @@ package ru.job4j.serialization;
 import java.util.Arrays;
 
 public class Car {
-    private final boolean old;
-    private final int age;
-    private final Additional additional;
-    private final String[] owners;
+    private boolean old;
+    private int age;
+    private Additional additional;
+    private String[] owners;
 
     public Car(boolean old, int age, Additional additional, String[] owners) {
         this.old = old;
