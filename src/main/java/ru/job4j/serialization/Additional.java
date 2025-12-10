@@ -20,6 +20,14 @@ public class Additional {
         this.bonus = bonus;
     }
 
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
     @Override
     public String toString() {
         return "Additional{"
