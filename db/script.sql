@@ -14,4 +14,3 @@ UPDATE cars
 SET year = 2023;
 
 DELETE FROM cars;
-E FROM cars;
