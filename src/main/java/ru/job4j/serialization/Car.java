@@ -1,9 +1,9 @@
 package ru.job4j.serialization;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
-public class Car implements Serializable {
+public class Car {
+
     private boolean old;
     private int age;
     private Additional additional;
@@ -12,7 +12,7 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(boolean old, int age, Additional additional, String[] owners) {
+    public Car(boolean old, int age, Additional additional, String... owners) {
         this.old = old;
         this.age = age;
         this.additional = additional;
@@ -53,11 +53,11 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "old=" + old +
-                ", age=" + age +
-                ", additional=" + additional +
-                ", owners=" + Arrays.toString(owners) +
-                '}';
+        return "Car{"
+                + "old=" + old
+                + ", age=" + age
+                + ", additional=" + additional
+                + ", owners=" + Arrays.toString(owners)
+                + '}';
     }
 }

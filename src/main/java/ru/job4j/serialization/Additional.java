@@ -1,8 +1,7 @@
 package ru.job4j.serialization;
 
-import java.io.Serializable;
+public class Additional {
 
-public class Additional implements Serializable {
     private String attachment;
     private String bonus;
 
@@ -32,9 +31,9 @@ public class Additional implements Serializable {
 
     @Override
     public String toString() {
-        return "Additional{" +
-                "attachment='" + attachment + '\'' +
-                ", bonus='" + bonus + '\'' +
-                '}';
+        return "Additional{"
+                + "attachment='" + attachment + '\''
+                + ", bonus='" + bonus + '\''
+                + '}';
     }
 }
