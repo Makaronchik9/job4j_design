@@ -1,11 +1,10 @@
 package ru.job4j.serialization.json;
 
-import org.json.JSONPropertyIgnore;
+import org.json.JSONObject;
 
 public class A {
     private B b;
 
-    @JSONPropertyIgnore
     public B getB() {
         return b;
     }
@@ -16,5 +15,14 @@ public class A {
 
     public String getHello() {
         return "Hello";
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("hello", getHello());
+        if (b != null) {
+            json.put("bHasA", b.getA() != null);
+        }
+        return json;
     }
 }

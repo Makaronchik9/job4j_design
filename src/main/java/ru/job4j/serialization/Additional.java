@@ -1,15 +1,8 @@
 package ru.job4j.serialization;
 
-import jakarta.xml.bind.annotation.*;
-
-@XmlRootElement(name = "additional")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Additional {
 
-    @XmlAttribute
     private String attachment;
-
-    @XmlAttribute
     private String bonus;
 
     public Additional() {
@@ -24,8 +17,16 @@ public class Additional {
         return attachment;
     }
 
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
     public String getBonus() {
         return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
     }
 
     @Override

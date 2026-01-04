@@ -1,23 +1,12 @@
 package ru.job4j.serialization;
 
-import jakarta.xml.bind.annotation.*;
 import java.util.Arrays;
 
-@XmlRootElement(name = "car")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
 
-    @XmlAttribute
     private boolean old;
-
-    @XmlAttribute
     private int age;
-
-    @XmlElement
     private Additional additional;
-
-    @XmlElementWrapper(name = "owners")
-    @XmlElement(name = "owner")
     private String[] owners;
 
     public Car() {
@@ -34,16 +23,32 @@ public class Car {
         return old;
     }
 
+    public void setOld(boolean old) {
+        this.old = old;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Additional getAdditional() {
         return additional;
     }
 
+    public void setAdditional(Additional additional) {
+        this.additional = additional;
+    }
+
     public String[] getOwners() {
         return owners;
+    }
+
+    public void setOwners(String[] owners) {
+        this.owners = owners;
     }
 
     @Override
