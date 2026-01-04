@@ -1,29 +1,18 @@
 package ru.job4j.serialization;
 
-import jakarta.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.Arrays;
 
-@XmlRootElement(name = "car")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Car {
-
-    @XmlAttribute
+public class Car implements Serializable {
     private boolean old;
-
-    @XmlAttribute
     private int age;
-
-    @XmlElement
     private Additional additional;
-
-    @XmlElementWrapper(name = "owners")
-    @XmlElement(name = "owner")
     private String[] owners;
 
     public Car() {
     }
 
-    public Car(boolean old, int age, Additional additional, String... owners) {
+    public Car(boolean old, int age, Additional additional, String[] owners) {
         this.old = old;
         this.age = age;
         this.additional = additional;
@@ -34,25 +23,41 @@ public class Car {
         return old;
     }
 
+    public void setOld(boolean old) {
+        this.old = old;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Additional getAdditional() {
         return additional;
     }
 
+    public void setAdditional(Additional additional) {
+        this.additional = additional;
+    }
+
     public String[] getOwners() {
         return owners;
     }
 
+    public void setOwners(String[] owners) {
+        this.owners = owners;
+    }
+
     @Override
     public String toString() {
-        return "Car{"
-                + "old=" + old
-                + ", age=" + age
-                + ", additional=" + additional
-                + ", owners=" + Arrays.toString(owners)
-                + '}';
+        return "Car{" +
+                "old=" + old +
+                ", age=" + age +
+                ", additional=" + additional +
+                ", owners=" + Arrays.toString(owners) +
+                '}';
     }
 }

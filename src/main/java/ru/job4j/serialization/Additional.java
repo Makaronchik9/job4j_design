@@ -1,15 +1,9 @@
 package ru.job4j.serialization;
 
-import jakarta.xml.bind.annotation.*;
+import java.io.Serializable;
 
-@XmlRootElement(name = "additional")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Additional {
-
-    @XmlAttribute
+public class Additional implements Serializable {
     private String attachment;
-
-    @XmlAttribute
     private String bonus;
 
     public Additional() {
@@ -24,15 +18,23 @@ public class Additional {
         return attachment;
     }
 
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
     public String getBonus() {
         return bonus;
     }
 
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
+    }
+
     @Override
     public String toString() {
-        return "Additional{"
-                + "attachment='" + attachment + '\''
-                + ", bonus='" + bonus + '\''
-                + '}';
+        return "Additional{" +
+                "attachment='" + attachment + '\'' +
+                ", bonus='" + bonus + '\'' +
+                '}';
     }
 }
