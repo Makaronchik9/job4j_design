@@ -1,10 +1,13 @@
 package ru.job4j.ood.lsp.foodwarehouse.store;
 
 import ru.job4j.ood.lsp.foodwarehouse.Food;
+
 import java.util.List;
 import java.util.function.Predicate;
 
 public interface Store {
+
+    boolean accept(Food food, long totalLife, long remainTime);
 
     void add(Food food);
 

@@ -6,15 +6,17 @@ import ru.job4j.ood.lsp.foodwarehouse.ControlQuality;
 import ru.job4j.ood.lsp.foodwarehouse.Food;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WarehouseTest {
 
-    private AbstractStore warehouse;
-    private AbstractStore shop;
-    private AbstractStore trash;
+    private Warehouse warehouse;
+    private Shop shop;
+    private Trash trash;
     private ControlQuality controlQuality;
+
     private Food cheese;
     private Food cheese2;
     private Food fish;
@@ -24,25 +26,32 @@ class WarehouseTest {
         warehouse = new Warehouse();
         shop = new Shop();
         trash = new Trash();
-        controlQuality = new ControlQuality(warehouse, shop, trash);
 
-        cheese = new Food("Cheese",
+        controlQuality = new ControlQuality(List.of(warehouse, shop, trash));
+
+        cheese = new Food(
+                "Cheese",
                 LocalDate.now().minusDays(1),
                 LocalDate.now().plusDays(60),
                 100,
-                10);
+                10
+        );
 
-        cheese2 = new Food("Cheese2",
+        cheese2 = new Food(
+                "Cheese2",
                 LocalDate.now().minusDays(5),
                 LocalDate.now().plusDays(50),
                 120,
-                20);
+                20
+        );
 
-        fish = new Food("Fish",
+        fish = new Food(
+                "Fish",
                 LocalDate.now().minusDays(20),
                 LocalDate.now().minusDays(1),
                 200,
-                30);
+                30
+        );
 
         controlQuality.chosePlace(cheese);
         controlQuality.chosePlace(cheese2);
@@ -51,8 +60,8 @@ class WarehouseTest {
 
     @Test
     void whenCheeseAndCheese2GoToWarehouse() {
-        assertTrue(warehouse.findAll().contains(cheese), "Cheese должен быть на складе");
-        assertTrue(warehouse.findAll().contains(cheese2), "Cheese2 должен быть на складе");
-        assertFalse(warehouse.findAll().contains(fish), "Fish не должен быть на складе");
+        assertTrue(warehouse.findAll().contains(cheese));
+        assertTrue(warehouse.findAll().contains(cheese2));
+        assertFalse(warehouse.findAll().contains(fish));
     }
 }
