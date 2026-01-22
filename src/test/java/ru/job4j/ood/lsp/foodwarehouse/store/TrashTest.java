@@ -53,9 +53,9 @@ class TrashTest {
                 50
         );
 
-        controlQuality.chosePlace(cheese);
-        controlQuality.chosePlace(cheese2);
-        controlQuality.chosePlace(fish);
+        controlQuality.choosePlace(cheese);
+        controlQuality.choosePlace(cheese2);
+        controlQuality.choosePlace(fish);
     }
 
     @Test

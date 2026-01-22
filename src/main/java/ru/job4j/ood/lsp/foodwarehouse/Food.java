@@ -1,15 +1,17 @@
 package ru.job4j.ood.lsp.foodwarehouse;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Food {
-    private String name;
-    private LocalDate createDate;
-    private LocalDate expiryDate;
-    private double price;
-    private double discount;
 
-    public Food(String name, LocalDate createDate, LocalDate expiryDate, double price, double discount) {
+    private final String name;
+    private final LocalDate createDate;
+    private final LocalDate expiryDate;
+    private int price;
+    private final int discount;
+
+    public Food(String name, LocalDate createDate, LocalDate expiryDate, int price, int discount) {
         this.name = name;
         this.createDate = createDate;
         this.expiryDate = expiryDate;
@@ -17,27 +19,21 @@ public class Food {
         this.discount = discount;
     }
 
+    public double getLifePercent() {
+        long total = ChronoUnit.DAYS.between(createDate, expiryDate);
+        long passed = ChronoUnit.DAYS.between(createDate, LocalDate.now());
+        return (double) passed / total * 100;
+    }
+
+    public void applyDiscount() {
+        price = price - price * discount / 100;
+    }
+
     public String getName() {
         return name;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
-    }
-
-    public LocalDate getExpiryDate() {
-        return expiryDate;
-    }
-
-    public double getPrice() {
+    public int getPrice() {
         return price;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

@@ -1,10 +1,8 @@
 package ru.job4j.ood.lsp.foodwarehouse;
 
 import ru.job4j.ood.lsp.foodwarehouse.store.Store;
-import ru.job4j.ood.lsp.foodwarehouse.Food;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality {
@@ -15,15 +13,25 @@ public class ControlQuality {
         this.stores = stores;
     }
 
-    public void chosePlace(Food food) {
-        long totalLife = ChronoUnit.DAYS.between(food.getCreateDate(), food.getExpiryDate());
-        long remainTime = ChronoUnit.DAYS.between(LocalDate.now(), food.getExpiryDate());
+    public void choosePlace(Food food) {
+        for (Store store : stores) {
+            if (store.accept(food)) {
+                store.add(food);
+                return;
+            }
+        }
+    }
+
+    public void resort() {
+        List<Food> allFoods = new ArrayList<>();
 
         for (Store store : stores) {
-            if (store.accept(food, totalLife, remainTime)) {
-                store.add(food);
-                break;
-            }
+            allFoods.addAll(store.findAll());
+            store.clear();
+        }
+
+        for (Food food : allFoods) {
+            choosePlace(food);
         }
     }
 }
