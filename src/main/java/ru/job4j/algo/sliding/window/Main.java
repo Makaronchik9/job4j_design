@@ -29,7 +29,7 @@ public class Main {
             if (activeIntervals.size() > maxOverlap) {
                 maxOverlap = activeIntervals.size();
                 maxStart = interval.start;
-                maxEnd = activeIntervals.peek().end; // минимальный конец среди активных интервалов
+                maxEnd = activeIntervals.peek().end;
             }
         }
 
