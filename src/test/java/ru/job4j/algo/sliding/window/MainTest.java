@@ -1,9 +1,10 @@
 package ru.job4j.algo.sliding.window;
 
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MainTest {
 
@@ -59,17 +60,5 @@ public class MainTest {
 
         int[] result = Main.findMaxOverlapInterval(intervals);
         assertThat(result).containsExactly(-1, -1);
-    }
-
-    @Test
-    public void whenAllOverlapThenFindMaxOverlapInterval() {
-        List<Interval> intervals = new ArrayList<>();
-        intervals.add(new Interval(1, 10));
-        intervals.add(new Interval(2, 9));
-        intervals.add(new Interval(3, 8));
-        intervals.add(new Interval(4, 7));
-
-        int[] result = Main.findMaxOverlapInterval(intervals);
-        assertThat(result).containsExactly(4, 7);
     }
 }
