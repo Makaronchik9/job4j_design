@@ -1,161 +1,165 @@
 package ru.job4j.collection.binarytree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BinarySearchTree<T extends Comparable<T>> {
 
-    private Node root;
+    private Node<T> root;
 
-    public boolean put(T key) {
-        if (Objects.isNull(root)) {
-            root = new Node(key);
+    private static class Node<T> {
+        T value;
+        Node<T> left;
+        Node<T> right;
+
+        Node(T value) {
+            this.value = value;
+        }
+    }
+
+    public boolean put(T value) {
+        if (root == null) {
+            root = new Node<>(value);
             return true;
         }
-        return put(root, key);
+        return put(root, value);
     }
 
-    private boolean put(Node node, T key) {
-        int cmp = key.compareTo(node.key);
+    private boolean put(Node<T> node, T value) {
+        int cmp = value.compareTo(node.value);
+        if (cmp == 0) {
+            return false;
+        }
         if (cmp < 0) {
             if (node.left == null) {
-                node.left = new Node(key);
+                node.left = new Node<>(value);
                 return true;
-            } else return put(node.left, key);
-        } else if (cmp > 0) {
-            if (node.right == null) {
-                node.right = new Node(key);
-                return true;
-            } else return put(node.right, key);
-        }
-        return false;
-    }
-
-    public boolean contains(T key) {
-        return find(root, key) != null;
-    }
-
-    private Node find(Node node, T key) {
-        if (node == null) return null;
-        int cmp = key.compareTo(node.key);
-        if (cmp == 0) return node;
-        return cmp < 0 ? find(node.left, key) : find(node.right, key);
-    }
-
-    public boolean remove(T key) {
-        if (root == null || key == null) return false;
-        boolean[] removed = new boolean[]{false};
-        root = removeNode(root, key, removed);
-        return removed[0];
-    }
-
-    private Node removeNode(Node node, T key, boolean[] removed) {
-        if (node == null) return null;
-
-        int cmp = key.compareTo(node.key);
-        if (cmp < 0) {
-            node.left = removeNode(node.left, key, removed);
-        } else if (cmp > 0) {
-            node.right = removeNode(node.right, key, removed);
+            }
+            return put(node.left, value);
         } else {
-            removed[0] = true;
-            if (node.left == null) return node.right;
-            if (node.right == null) return node.left;
-
-
-            Node successor = minimum(node.right);
-            node.key = successor.key;
-            node.right = removeNode(node.right, successor.key, new boolean[]{false});
+            if (node.right == null) {
+                node.right = new Node<>(value);
+                return true;
+            }
+            return put(node.right, value);
         }
-        return node;
     }
 
-    public T minimum() {
-        return root != null ? minimum(root).key : null;
+    public boolean contains(T value) {
+        return contains(root, value);
     }
 
-    private Node minimum(Node node) {
-        while (node.left != null) node = node.left;
-        return node;
+    private boolean contains(Node<T> node, T value) {
+        if (node == null) {
+            return false;
+        }
+        int cmp = value.compareTo(node.value);
+        if (cmp == 0) {
+            return true;
+        }
+        return cmp < 0
+                ? contains(node.left, value)
+                : contains(node.right, value);
     }
 
     public T maximum() {
-        return root != null ? maximum(root).key : null;
+        Node<T> current = root;
+        while (current.right != null) {
+            current = current.right;
+        }
+        return current.value;
     }
 
-    private Node maximum(Node node) {
-        while (node.right != null) node = node.right;
-        return node;
+    public T minimum() {
+        Node<T> current = root;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current.value;
     }
 
     public List<T> inSymmetricalOrder() {
         List<T> result = new ArrayList<>();
-        return inSymmetricalOrder(root, result);
+        inOrder(root, result);
+        return result;
     }
 
-    private List<T> inSymmetricalOrder(Node node, List<T> list) {
-        if (node != null) {
-            inSymmetricalOrder(node.left, list);
-            list.add(node.key);
-            inSymmetricalOrder(node.right, list);
+    private void inOrder(Node<T> node, List<T> list) {
+        if (node == null) {
+            return;
         }
-        return list;
+        inOrder(node.left, list);
+        list.add(node.value);
+        inOrder(node.right, list);
     }
 
     public List<T> inPreOrder() {
         List<T> result = new ArrayList<>();
-        return inPreOrder(root, result);
+        preOrder(root, result);
+        return result;
     }
 
-    private List<T> inPreOrder(Node node, List<T> list) {
-        if (node != null) {
-            list.add(node.key);
-            inPreOrder(node.left, list);
-            inPreOrder(node.right, list);
+    private void preOrder(Node<T> node, List<T> list) {
+        if (node == null) {
+            return;
         }
-        return list;
+        list.add(node.value);
+        preOrder(node.left, list);
+        preOrder(node.right, list);
     }
 
     public List<T> inPostOrder() {
         List<T> result = new ArrayList<>();
-        return inPostOrder(root, result);
+        postOrder(root, result);
+        return result;
     }
 
-    private List<T> inPostOrder(Node node, List<T> list) {
-        if (node != null) {
-            inPostOrder(node.left, list);
-            inPostOrder(node.right, list);
-            list.add(node.key);
+    private void postOrder(Node<T> node, List<T> list) {
+        if (node == null) {
+            return;
         }
-        return list;
+        postOrder(node.left, list);
+        postOrder(node.right, list);
+        list.add(node.value);
     }
 
-    @Override
-    public String toString() {
-        return PrintTree.getTreeDisplay(root);
+    public boolean remove(T value) {
+        if (!contains(value)) {
+            return false;
+        }
+        root = remove(root, value);
+        return true;
     }
 
-    private class Node implements VisualNode {
-        private T key;
-        private Node left;
-        private Node right;
-
-        Node(T key) {
-            this.key = key;
+    private Node<T> remove(Node<T> node, T value) {
+        if (node == null) {
+            return null;
         }
 
-        @Override
-        public VisualNode getLeft() {
-            return left;
-        }
+        int cmp = value.compareTo(node.value);
 
-        @Override
-        public VisualNode getRight() {
-            return right;
+        if (cmp < 0) {
+            node.left = remove(node.left, value);
+        } else if (cmp > 0) {
+            node.right = remove(node.right, value);
+        } else {
+            if (node.left == null) {
+                return node.right;
+            }
+            if (node.right == null) {
+                return node.left;
+            }
+            T min = findMin(node.right);
+            node.value = min;
+            node.right = remove(node.right, min);
         }
+        return node;
+    }
 
-        @Override
-        public String getText() {
-            return key.toString();
+    private T findMin(Node<T> node) {
+        while (node.left != null) {
+            node = node.left;
         }
+        return node.value;
     }
 }
